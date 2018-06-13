@@ -31,6 +31,7 @@ import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfigura
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,6 @@ import it.govpay.stampe.pdf.avviso.AvvisoPagamentoPdf;
 import it.govpay.stampe.pdf.rt.IRicevutaPagamento;
 import it.govpay.stampe.pdf.rt.RicevutaPagamentoProperties;
 import it.govpay.stampe.pdf.rt.RicevutaPagamentoUtils;
-
 
 
 // TODO: Auto-generated Javadoc
@@ -73,13 +73,14 @@ public class StampeWsApplication {
 	/** The quietanza report. */
 	@Autowired
 	QuietanzaReport quietanzaReport;
-	
+	@Autowired ExtReport extReport;
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		
 		try {
 			SpringApplication.run(StampeWsApplication.class, args);
 		} catch (RuntimeException e) {
@@ -142,5 +143,12 @@ public class StampeWsApplication {
 		return os.toByteArray();
 	}
 
+	@PostMapping(path = "/{report}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] printPdfReport(@PathVariable("report") String reportType,@RequestBody byte[] jsonDataSource) throws IOException, Exception {
+		log.info("Print Quietanza");
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		extReport.exportToStream(reportType,jsonDataSource, os);
+		return os.toByteArray();
+	}
 	
 }

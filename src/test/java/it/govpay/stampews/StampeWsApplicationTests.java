@@ -16,6 +16,7 @@
  */
 package it.govpay.stampews;
 
+import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,6 +45,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -83,7 +86,7 @@ public class StampeWsApplicationTests {
 	public void shouldWritePdfRT() throws InterruptedException, JAXBException, SAXException, FileNotFoundException,
 			IOException, URISyntaxException {
 		// registration has to take place...
-		Thread.sleep(3000);
+	
 		RicevutaPagamento ricevuta = new RicevutaPagamento();
 		ricevuta.setImportoPagato(BigDecimal.TEN);
 
@@ -121,7 +124,7 @@ public class StampeWsApplicationTests {
 	public void shouldWriteAvvisoPdf() throws InterruptedException, JAXBException, SAXException, FileNotFoundException,
 			IOException, URISyntaxException {
 		// registration has to take place...
-		Thread.sleep(3000);
+		
 		PrintAvviso print = new PrintAvviso();
 		print.setQrCode("1");
 		print.setBarCode("2");
@@ -197,6 +200,20 @@ public class StampeWsApplicationTests {
 
 		then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		try (FileOutputStream out = new FileOutputStream("/tmp/test-quietanza.pdf")) {
+			assertNotNull("NULL BODY", response.getBody());
+			out.write(response.getBody());
+		}
+	}
+	@Test
+	public void testExtReport() throws FileNotFoundException, IOException {
+		byte[] request;
+
+		request = "{ \"a\":1 }".getBytes();
+		ResponseEntity<byte[]> response = this.testRestTemplate
+				.postForEntity("http://localhost:" + this.port + "/Blank/pdf", request, byte[].class);
+		Assume.assumeFalse(response.getStatusCodeValue() == 406);
+		then(response.getStatusCodeValue()).isEqualTo(200);
+		try (FileOutputStream out = new FileOutputStream("/tmp/ext.pdf")) {
 			assertNotNull("NULL BODY", response.getBody());
 			out.write(response.getBody());
 		}
