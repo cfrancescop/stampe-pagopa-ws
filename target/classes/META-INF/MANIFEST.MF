@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: stampe-ws
+Implementation-Version: 0.2.1-SNAPSHOT
+Built-By: Pirrone.f
+Implementation-Vendor-Id: com.finance-evolution
+Build-Jdk: 1.8.0_73
+Implementation-URL: http://projects.spring.io/spring-boot/stampe-pagop
+ a-ws/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
