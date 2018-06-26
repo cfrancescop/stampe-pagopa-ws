@@ -35,7 +35,7 @@ public class RicevutaPagamentoPdf implements IRicevutaPagamento{
 			JasperPdfExporterBuilder pdfExporter = export.pdfExporter(os);
 			JasperReportBuilder report = report();
 
-			List<ComponentBuilder<?, ?>> cl = new ArrayList<ComponentBuilder<?,?>>();
+			List<ComponentBuilder<?, ?>> cl = new ArrayList<>();
 
 			ComponentBuilder<?, ?> createTitleComponent = TemplateRt.createTitleComponent(ricevuta,errList);
 			if(createTitleComponent != null) {

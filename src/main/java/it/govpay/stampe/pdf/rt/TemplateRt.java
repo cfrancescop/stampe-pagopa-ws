@@ -3,13 +3,11 @@ package it.govpay.stampe.pdf.rt;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +45,8 @@ public class TemplateRt {
 		String sezione = "Sezione Titolo";
 		try{
 			List<ComponentBuilder<?, ?>> lst = new ArrayList<ComponentBuilder<?,?>>();
-			InputStream resourceLogoPagoPa = new ByteArrayInputStream(Base64.decodeBase64(Costanti.logoPagoPa));
+			
+			InputStream resourceLogoPagoPa = TemplateRt.class.getResourceAsStream("/pagopa_logo.png");
 			StyleBuilder headerStyle = stl.style(TemplateBase.bold18LeftStyle); 
 			
 			if(ricevuta.getCodDominio()!=null ){

@@ -174,7 +174,7 @@ public class AvvisoPagamentoProperties {
 				}
 			}
 		} catch (Exception e) {
-			log.warn("Errore di inizializzazione " + e.getMessage() + ". Impostati valori di default.");
+			log.warn("Errore di inizializzazione " + e.getMessage() + ". Impostati valori di default.",e);
 		}
 	}
 

@@ -29,6 +29,8 @@ import org.junit.Test;
 import it.govpay.model.Anagrafica;
 import it.govpay.model.Dominio;
 import it.govpay.model.RicevutaPagamento;
+import it.govpay.stampe.pdf.avviso.AvvisoPagamentoPdf;
+import it.govpay.stampe.pdf.avviso.AvvisoPagamentoProperties;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,6 +47,8 @@ public class RicevutaPagamentoUtilsTest {
 	public void setup() throws Exception {
 
 		RicevutaPagamentoProperties.newInstance("");
+		AvvisoPagamentoProperties.newInstance("/var/govpay");
+
 	}
 	
 	/**
